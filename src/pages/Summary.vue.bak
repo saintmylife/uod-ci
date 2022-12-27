@@ -1,0 +1,175 @@
+<template>
+  <div
+    id="summaryContainer"
+    class="container-fluid position-relative p-0 b-0 overflow-hidden h-100"
+  >
+    <!-- <div class="h-100 w-100 position-absolute bg-summary-download">
+      <img ref="summaryBg" class="w-100 h-100" />
+    </div> -->
+    <!-- v-if="!captureProgress" -->
+    <video-background data-html2canvas-ignore :source="getEventAssetSummary" />
+    <div class="container-person d-flex flex-column">
+      <div
+        class="row justify-content-center align-content-center align-items-center text-center"
+      >
+        <div class="col">
+          <qrcode-vue level="H" :value="getGuest.idqrcode" ref="qr" />
+          <p class="m-0 fw-bold">{{ getGuest.idqrcode }}</p>
+        </div>
+      </div>
+      <div class="row justify-content-around align-content-center px-3">
+        <div class="col">
+          <!-- <b-card
+            align="center"
+            :title="getGuests.name"
+            :sub-title="getGuests.address ? getGuests.address : ''"
+            title-tag="h3"
+          >
+            <b-card-text>
+              <small
+                class="d-block"
+                v-for="(detail, index) in getGuests.details"
+                :key="index"
+              >
+                {{ detail.value }}
+              </small>
+              <small
+                v-if="answers.length !== 0"
+                class="text-muted"
+                v-html="answers.value"
+              />
+            </b-card-text>
+          </b-card> -->
+        </div>
+      </div>
+      <div class="row justify-content-center align-content-center text-center">
+        <!-- v-if="toggleValidFor" -->
+        <div class="col-8 border border-dark rounded-lg valid-person-box">
+          <p class="m-0 p-1 font-weight-bold text-light valid-person-text">
+            Berlaku Untuk
+            <!-- {{ getInputPersons === 0 ? 1 : getInputPersons }} -->
+            Orang
+          </p>
+        </div>
+        <div class="mt-2 border border-dark rounded-lg valid-person-box">
+          <!-- v-if="captureProgress" -->
+          <p
+            style="font-size: 0.85rem"
+            class="m-0 py-2 px-2 font-weight-bold text-light valid-person-text"
+          >
+            QR CODE WAJIB DIBAWA PADA SAAT ACARA
+          </p>
+        </div>
+      </div>
+      <div
+        class="row justify-content-center align-content-center text-center"
+      ></div>
+    </div>
+    <div
+      data-html2canvas-ignore
+      class="row btn-action justify-content-around align-content-center text-center"
+    >
+      <div class="col text-right">
+        <button class="btn btn-labeled border-0 btn-dark">
+          <!-- @click="downloadSummary"
+          :disabled="isLeaving || captureProgress" -->
+          <span class="btn-label p-1 p-sm-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-download"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+              />
+              <path
+                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+              />
+            </svg>
+          </span>
+          UNDUH
+        </button>
+      </div>
+      <div class="col text-left">
+        <button class="btn btn-labeled border-0 btn-dark">
+          <!-- @click="nextPage"
+          :disabled="isLeaving || captureProgress" -->
+          <span class="btn-label p-1 p-sm-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-arrow-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+              />
+            </svg>
+          </span>
+          LANJUT
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup>
+import { useStore } from "vuex";
+import { computed, ref, onMounted } from "vue";
+import VideoBackground from "/src/components/VideoBackground.vue";
+import QrcodeVue from "qrcode.vue";
+
+const store = useStore();
+const getEventAssetSummary = computed(
+  () => store.getters["events/getEventData"].img_qrcode
+);
+const getGuest = computed(() => store.getters["guests/getGuestData"]);
+const qr = ref(null);
+onMounted(() => {
+  qr.value.style.width = "100% !important";
+  qr.value.style.height = "100% !important";
+});
+</script>
+<style>
+#summaryContainer {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.qr canvas {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0.3rem;
+}
+</style>
+<style scoped>
+.container-person {
+  height: 90%;
+  justify-content: space-evenly;
+}
+
+.btn-action {
+  height: 10%;
+}
+
+.row .col .card {
+  background-color: transparent !important;
+  border: none;
+}
+
+.valid-person-box {
+  background: rgba(18, 18, 18, 0.25);
+}
+
+.valid-person-text {
+  text-shadow: 1px 1px 5px rgba(18, 18, 18, 0.75);
+}
+
+.bg-summary-download {
+  z-index: -1;
+}
+</style>

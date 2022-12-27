@@ -1,0 +1,30 @@
+{
+  "name": "uod-ci",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@chenfengyuan/vue-qrcode": "^2.0.0",
+    "@videojs/http-streaming": "^2.14.2",
+    "axios": "^0.27.2",
+    "bootstrap": "^5.1.3",
+    "bootstrap-icons": "^1.8.2",
+    "device-detector-js": "^3.0.3",
+    "html2canvas": "^1.4.1",
+    "qrcode": "^1.5.0",
+    "qrcode.vue": "^3.3.3",
+    "swiper": "^8.1.5",
+    "tiny-emitter": "^2.1.0",
+    "vue": "^3.2.35",
+    "vue-router": "^4.0.15",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.3",
+    "vite": "^2.9.9"
+  }
+}

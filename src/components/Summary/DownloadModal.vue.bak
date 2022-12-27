@@ -1,0 +1,59 @@
+<template>
+  <div
+    class="modal fade"
+    ref="inputPersonModalContent"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content overflow-hidden" style="border-radius: 1rem">
+        <div class="modal-body">
+          <img v-if="props.image" :src="props.image" />
+        </div>
+        <div
+          @click="hideshowInputPersonModal()"
+          class="position-absolute btn-close-modal-person"
+        >
+          X
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup>
+import { ref, inject } from "vue";
+const props = defineProps({
+  image: {
+    type: String,
+    default: "",
+  },
+});
+const inputPersonModalContent = ref(null);
+const qrImage = inject("qrImage");
+console.log(qrImage);
+
+const showInputPersonModal = () => {
+  inputPersonModalContent.value.style.display = "block";
+  inputPersonModalContent.value.classList.add("show");
+};
+const hideshowInputPersonModal = () => {
+  inputPersonModalContent.value.style.display = "none";
+  inputPersonModalContent.value.classList.remove("show");
+};
+</script>
+<style scoped>
+.modal-dialog {
+  max-width: 20rem !important;
+}
+.btn-close-modal-person {
+  top: 0;
+  right: 0px;
+  background-color: #343a40;
+  color: #f8f9fa;
+  font-weight: 800;
+  padding: 7px 15px;
+  box-sizing: border-box;
+  border-bottom-left-radius: 15px;
+}
+</style>
