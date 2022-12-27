@@ -13,6 +13,7 @@
           :source="content"
           :slideIndex="index"
         />
+        <button v-if="index === 0 && data.event.id === 296" class="invitation-button-layer">PANDUAN</button>
       </swiper-slide>
       <div class="swiper-pagination"></div>
       <div class="swiper-button-next"></div>
@@ -40,6 +41,7 @@ export default {
   setup() {
     const store = useStore();
     const data = reactive({
+      event: {},
       slider: [],
       swiperModules: [Navigation, Pagination],
       swiperOptions: {
@@ -62,6 +64,8 @@ export default {
     data.slider = store.getters["events/getEventSlider"].map(
       (item) => item.media
     );
+    data.event = store.getters["events/getEventData"];
+    console.log(data.event);
     const swiperEl = ref(null);
     const onSwiper = (swiper) => {
       swiperEl.value = swiper;
@@ -154,5 +158,22 @@ export default {
   height: 100%;
   width: 100%;
   object-fit: fill;
+}
+.invitation-button-layer {
+  position: absolute;
+  /* Bottom view ke container paling bawah / height viewport * 100% */
+  bottom: 14.75%;
+  /* Hasil Bottom - Bottom view ke container paling atas / height viewport * 100% */
+  /* height: 6%; */
+  padding: 4px 16px;
+  text-align: center;
+  font-weight: 700;
+  color: rgb(28,124,141);
+  border: 2px solid rgb(28,124,141);
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
 }
 </style>
