@@ -13,7 +13,7 @@
           :source="content"
           :slideIndex="index"
         />
-        <button v-if="index === 0 && data.event.id === 296" class="invitation-button-layer">PANDUAN</button>
+        <button v-if="index === 0 && data.event.id === 296" class="invitation-button-layer" @click="handleClickGuide">PANDUAN</button>
       </swiper-slide>
       <div class="swiper-pagination"></div>
       <div class="swiper-button-next"></div>
@@ -84,6 +84,18 @@ export default {
         }
       }
     };
+  
+    const handleClickGuide = () => {
+      if (data.event.id != 296) {
+        return;
+      }
+
+      window.open(
+        `https://reddonedigital.com/Gambar/event/OpeningBulanK3Nasional2023/Rundown.jpg`,
+        "_blank",
+        "noopener"
+      );
+    }
     onMounted(() => {
       videoSlide.value = document.querySelectorAll("video-js");
       eventBus.$emit("active-page", "invitation");
@@ -93,6 +105,7 @@ export default {
       onSwiper,
       videoSlide,
       swiperSlideChange,
+      handleClickGuide
     };
   },
 };
