@@ -13,7 +13,9 @@
           :source="content"
           :slideIndex="index"
         />
-        <button v-if="index === 0 && data.event.id === 296" class="invitation-button-layer" @click="handleClickGuide">PANDUAN</button>
+        <button v-if="index === 0 && data.event.id === 296" class="btn text-light invitation-button-layer" @click="handleClickGuide">
+          RUNDOWN
+        </button>
       </swiper-slide>
       <div class="swiper-pagination"></div>
       <div class="swiper-button-next"></div>
@@ -65,7 +67,7 @@ export default {
       (item) => item.media
     );
     data.event = store.getters["events/getEventData"];
-    console.log(data.event);
+
     const swiperEl = ref(null);
     const onSwiper = (swiper) => {
       swiperEl.value = swiper;
@@ -183,10 +185,21 @@ export default {
   font-weight: 700;
   color: rgb(28,124,141);
   border: 2px solid rgb(28,124,141);
-  border-radius: 999px;
+  background: #02abe9;
+  /* border-radius: 999px; */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 20;
+  animation: fadeIn 2s linear;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    bottom: 100;
+  }
 }
 </style>
