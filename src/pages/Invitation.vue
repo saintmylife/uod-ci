@@ -1,19 +1,18 @@
 <template>
   <div class="h-100 w-100">
-    <swiper
-      :modules="data.swiperModules"
-      :navigation="data.swiperOptions.navigation"
-      :pagination="data.swiperOptions.pagination"
-      @swiper="onSwiper"
-      @slideChange="swiperSlideChange"
-    >
+    <swiper :modules="data.swiperModules" :navigation="data.swiperOptions.navigation"
+      :pagination="data.swiperOptions.pagination" @swiper="onSwiper" @slideChange="swiperSlideChange">
       <swiper-slide v-for="(content, index) in data.slider" :key="content">
-        <video-player
-          :ref="videoSlide.el"
-          :source="content"
-          :slideIndex="index"
-        />
-        <button v-if="index === 0 && data.event.id === 296" class="btn text-light invitation-button-layer" @click="handleClickGuide">
+        <video-player :ref="videoSlide.el" :source="content" :slideIndex="index" />
+        <div v-if="index === 0 && data.event.id === 296" style="width:100%;height:300px;position:relative">
+            <div style="position:absolute;z-index:99;height:100%;width:100%" @click="handleYoutubeClick" />
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Vj-7-84Urnw?controls=0"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope;"
+            ></iframe>
+        </div>
+        <button v-if="index === 1 && data.event.id === 296" class="btn text-light invitation-button-layer"
+          @click="handleClickGuide">
           RUNDOWN
         </button>
       </swiper-slide>
@@ -98,6 +97,18 @@ export default {
         "noopener"
       );
     }
+
+    const handleYoutubeClick = () => {
+      if (data.event.id != 296) {
+        return;
+      }
+
+      window.open(
+        `https://youtu.be/Vj-7-84Urnw`,
+        "_blank",
+        "noopener"
+      );
+    }
     onMounted(() => {
       videoSlide.value = document.querySelectorAll("video-js");
       eventBus.$emit("active-page", "invitation");
@@ -107,7 +118,8 @@ export default {
       onSwiper,
       videoSlide,
       swiperSlideChange,
-      handleClickGuide
+      handleClickGuide,
+      handleYoutubeClick
     };
   },
 };
@@ -116,26 +128,32 @@ export default {
 :root {
   --swiper-theme-color: #e67e22;
 }
+
 .person-modal-content {
   width: 75%;
   margin: 0 auto;
   border-radius: 20px;
 }
+
 .b-form-spinbutton {
   border-color: #343a40;
 }
+
 .b-form-spinbutton:nth-child(2) {
   border-color: #f8f9fa;
 }
+
 .b-form-spinbutton button {
   background-color: #343a40;
   color: #f8f9fa;
 }
+
 @media only screen and (max-width: 320px) {
   .person-modal-title {
     font-size: 1.15rem;
   }
 }
+
 .modal-bg {
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -144,10 +162,12 @@ export default {
 .vjs-tech {
   object-fit: fill;
 }
+
 .swiper {
   max-height: 100%;
   height: 100%;
 }
+
 .swiper-slide {
   text-align: center;
   font-size: 18px;
@@ -164,6 +184,7 @@ export default {
   -webkit-align-items: center;
   align-items: center;
 }
+
 .swiper-slide video {
   padding: 0;
   margin: 0;
@@ -174,6 +195,7 @@ export default {
   width: 100%;
   object-fit: fill;
 }
+
 .invitation-button-layer {
   position: absolute;
   /* Bottom view ke container paling bawah / height viewport * 100% */
@@ -183,8 +205,8 @@ export default {
   padding: 4px 16px;
   text-align: center;
   font-weight: 700;
-  color: rgb(28,124,141);
-  border: 2px solid rgb(28,124,141);
+  color: rgb(28, 124, 141);
+  border: 2px solid rgb(28, 124, 141);
   background: #02abe9;
   /* border-radius: 999px; */
   display: flex;
@@ -198,6 +220,7 @@ export default {
   from {
     opacity: 0;
   }
+
   to {
     bottom: 100;
   }
