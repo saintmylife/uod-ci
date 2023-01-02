@@ -4,17 +4,17 @@
       :pagination="data.swiperOptions.pagination" @swiper="onSwiper" @slideChange="swiperSlideChange">
       <swiper-slide v-for="(content, index) in data.slider" :key="content">
         <video-player :ref="videoSlide.el" :source="content" :slideIndex="index" />
-        <div v-if="index === 0 && data.event.id === 296" style="width:100%;height:300px;position:relative">
+        <button v-if="index === 0 && data.event.id === 296" class="btn text-light invitation-button-layer"
+          @click="handleClickGuide">
+          RUNDOWN
+        </button>
+        <div v-if="index === 1 && data.event.id === 296" style="width:100%;height:250px;padding:24px;position:relative">
             <div style="position:absolute;z-index:99;height:100%;width:100%" @click="handleYoutubeClick" />
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Vj-7-84Urnw?controls=0"
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/sSc2vcH6cBM"
             title="YouTube video player" frameborder="0"
             allow="accelerometer; clipboard-write; encrypted-media; gyroscope;"
             ></iframe>
         </div>
-        <button v-if="index === 1 && data.event.id === 296" class="btn text-light invitation-button-layer"
-          @click="handleClickGuide">
-          RUNDOWN
-        </button>
       </swiper-slide>
       <div class="swiper-pagination"></div>
       <div class="swiper-button-next"></div>
@@ -104,7 +104,7 @@ export default {
       }
 
       window.open(
-        `https://youtu.be/Vj-7-84Urnw`,
+        `https://youtu.be/sSc2vcH6cBM`,
         "_blank",
         "noopener"
       );
