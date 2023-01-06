@@ -95,3 +95,29 @@
 .scale-slide-leave-to {
   bottom: -100%;
 }
+
+.invitation-button-layer {
+    position: absolute;
+    /* Bottom view ke container paling bawah / height viewport * 100% */
+    bottom: 14.75%;
+    /* Hasil Bottom - Bottom view ke container paling atas / height viewport * 100% */
+    /* height: 6%; */
+    /* padding: 4px 16px; */
+    /* text-align: center;
+    font-weight: 700;
+    color: rgb(28, 124, 141);
+    border: 2px solid rgb(28, 124, 141);
+    background: #02abe9; */
+    /* border-radius: 999px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    /* animation: fadeIn 2s forwards; */
+}
+
+@media only screen and (min-width:600px) {
+    .invitation-button-layer {
+        bottom: 16%;
+    }
+}

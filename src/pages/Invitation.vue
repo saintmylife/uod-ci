@@ -4,33 +4,29 @@
       :pagination="data.swiperOptions.pagination" @swiper="onSwiper" @slideChange="swiperSlideChange">
       <swiper-slide v-for="(content, index) in data.slider" :key="content">
         <video-player :ref="videoSlide.el" :source="content" :slideIndex="index" />
-        <button v-if="index === 0 && data.event.id === 296" class="btn text-light invitation-button-layer"
-          @click="handleClickGuide">
-          RUNDOWN
-        </button>
-        <div v-if="index === 1 && data.event.id === 296" style="width:100%;height:250px;padding:24px;position:relative">
-            <div style="position:absolute;z-index:99;height:100%;width:100%" @click="handleYoutubeClick" />
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/sSc2vcH6cBM"
-            title="YouTube video player" frameborder="0"
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope;"
-            ></iframe>
-        </div>
+        <!-- Custom Components -->
+        <custom-pln v-if="data.event.id === 296" :event="data.event" :key="data.event.id" :swiperIndex="data.swiperActiveIndex" v-cloak />
       </swiper-slide>
       <div class="swiper-pagination"></div>
       <div class="swiper-button-next"></div>
       <div class="swiper-button-prev"></div>
     </swiper>
+    <custom-poltek v-if="data.event.id === 297" :event="data.event" :swiperIndex="data.swiperActiveIndex" v-cloak />
     <confirm-button />
   </div>
 </template>
 <script>
 import { useStore } from "vuex";
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import eventBus from "/src/plugins/eventBus";
 import ConfirmButton from "/src/components/Invitation/ConfirmButton.vue";
 import VideoPlayer from "/src/components/VideoPlayer.vue";
+// Custom Event
+import CustomPln from '/src/components/Custom/CustomPln.vue';
+import CustomPoltek from '/src/components/Custom/CustomPoltek.vue';
+// End Custom Event
 import "swiper/css/bundle";
 export default {
   components: {
@@ -38,8 +34,10 @@ export default {
     Swiper,
     SwiperSlide,
     VideoPlayer,
+    CustomPln,
+    CustomPoltek,
   },
-  setup() {
+  setup () {
     const store = useStore();
     const data = reactive({
       event: {},
@@ -72,43 +70,22 @@ export default {
       swiperEl.value = swiper;
     };
     const videoSlide = ref([]);
+    const getSwiperActiveIndex = computed(() => data.swiperActiveIndex);
 
     const swiperSlideChange = () => {
       const currentVid = videoSlide.value[swiperEl.value.activeIndex];
+      data.swiperActiveIndex = swiperEl.value.activeIndex;
       const isPlayed = currentVid.player.hasStarted();
       if (isPlayed) {
         currentVid.player.currentTime(0);
       } else {
         const promise = currentVid.player.play();
         if (promise !== undefined) {
-          promise.then(() => {}).catch((err) => console.log(err));
+          promise.then(() => { }).catch((err) => console.log(err));
         }
       }
     };
-  
-    const handleClickGuide = () => {
-      if (data.event.id != 296) {
-        return;
-      }
 
-      window.open(
-        `https://reddonedigital.com/Gambar/event/OpeningBulanK3Nasional2023/Rundown.jpg`,
-        "_blank",
-        "noopener"
-      );
-    }
-
-    const handleYoutubeClick = () => {
-      if (data.event.id != 296) {
-        return;
-      }
-
-      window.open(
-        `https://youtu.be/sSc2vcH6cBM`,
-        "_blank",
-        "noopener"
-      );
-    }
     onMounted(() => {
       videoSlide.value = document.querySelectorAll("video-js");
       eventBus.$emit("active-page", "invitation");
@@ -118,8 +95,7 @@ export default {
       onSwiper,
       videoSlide,
       swiperSlideChange,
-      handleClickGuide,
-      handleYoutubeClick
+      getSwiperActiveIndex
     };
   },
 };
@@ -194,35 +170,5 @@ export default {
   height: 100%;
   width: 100%;
   object-fit: fill;
-}
-
-.invitation-button-layer {
-  position: absolute;
-  /* Bottom view ke container paling bawah / height viewport * 100% */
-  bottom: 14.75%;
-  /* Hasil Bottom - Bottom view ke container paling atas / height viewport * 100% */
-  /* height: 6%; */
-  padding: 4px 16px;
-  text-align: center;
-  font-weight: 700;
-  color: rgb(28, 124, 141);
-  border: 2px solid rgb(28, 124, 141);
-  background: #02abe9;
-  /* border-radius: 999px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 20;
-  animation: fadeIn 2s linear;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    bottom: 100;
-  }
 }
 </style>
