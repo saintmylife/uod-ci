@@ -3,18 +3,8 @@
     <swiper :modules="data.swiperModules" :navigation="data.swiperOptions.navigation"
       :pagination="data.swiperOptions.pagination" @swiper="onSwiper" @slideChange="swiperSlideChange">
       <swiper-slide v-for="(content, index) in data.slider" :key="content">
-        <video-player :ref="videoSlide.el" :source="content" :slideIndex="index" />
-        <button v-if="index === 0 && data.event.id === 296" class="btn text-light invitation-button-layer"
-          @click="handleClickGuide">
-          RUNDOWN
-        </button>
-        <div v-if="index === 1 && data.event.id === 296" style="width:100%;height:250px;padding:24px;position:relative">
-            <div style="position:absolute;z-index:99;height:100%;width:100%" @click="handleYoutubeClick" />
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/sSc2vcH6cBM"
-            title="YouTube video player" frameborder="0"
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope;"
-            ></iframe>
-        </div>
+        <adi-putro v-if="index === 2 && data.event.id === 332" :ref="videoSlide.el" :source="content" :slideIndex="index" />
+        <video-player v-else :ref="videoSlide.el" :source="content" :slideIndex="index" />
       </swiper-slide>
       <div class="swiper-pagination"></div>
       <div class="swiper-button-next"></div>
@@ -31,6 +21,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import eventBus from "/src/plugins/eventBus";
 import ConfirmButton from "/src/components/Invitation/ConfirmButton.vue";
 import VideoPlayer from "/src/components/VideoPlayer.vue";
+import AdiPutro from "../components/Custom/AdiPutro.vue";
 import "swiper/css/bundle";
 export default {
   components: {
@@ -38,6 +29,7 @@ export default {
     Swiper,
     SwiperSlide,
     VideoPlayer,
+    AdiPutro
   },
   setup() {
     const store = useStore();

@@ -73,11 +73,31 @@ export default {
       function () {
         const eventLang = data.event.lang;
 
+        let attendText = eventLang == 'id' ? 'HADIR' : 'ATTEND';
+        if (data.event.custom_page && data.event.custom_page.btn_confirm_text && data.event.custom_page.btn_confirm_text.attend) {
+          attendText = data.event.custom_page.btn_confirm_text.attend;
+        }
+
+        let maybeText = eventLang == 'id' ? 'RAGU' : 'MAYBE';
+        if (data.event.custom_page && data.event.custom_page.btn_confirm_text && data.event.custom_page.btn_confirm_text.maybe) {
+          maybeText = data.event.custom_page.btn_confirm_text.maybe;
+        }
+
+        let declineText = eventLang == 'id' ? 'TIDAK' : 'DECLINE';
+        if (data.event.custom_page && data.event.custom_page.btn_confirm_text && data.event.custom_page.btn_confirm_text.decline) {
+          declineText = data.event.custom_page.btn_confirm_text.decline;
+        }
+
+        let locationText = eventLang == 'id' ? 'LOKASI' : 'LOCATION';
+        if (data.event.custom_page && data.event.custom_page.btn_confirm_text && data.event.custom_page.btn_confirm_text.location) {
+          locationText = data.event.custom_page.btn_confirm_text.location;
+        }
+
         return {
-          attend: eventLang == 'id' ? 'HADIR' : 'ATTEND',
-          maybe: eventLang == 'id' ? 'RAGU' : 'MAYBE',
-          decline: eventLang == 'id' ? 'TIDAK' : 'DECLINE',
-          location: eventLang == 'id' ? 'LOKASI' : 'LOCATION'
+          attend: attendText,
+          maybe: maybeText,
+          decline: declineText,
+          location: locationText
         }
       }
     );
